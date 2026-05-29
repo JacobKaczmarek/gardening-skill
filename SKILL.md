@@ -47,7 +47,11 @@ Rules:
 - Run Gardener Python through `terminal`, not `execute_code`.
 - Use any Python 3 interpreter with required dependencies installed.
 - `setup()` handles env loading, validates required env vars, and path setup.
-- If required vars are missing, `setup()` fails fast with a clear configuration error.
+- If required vars are missing, `setup()` must fail fast with an actionable configuration error that includes:
+  1) where to set vars (`hermes config env-path` or resolved profile `.env` path),
+  2) exact required keys (`GARDENER_DB_URL`, `PLANTNET_API_KEY`),
+  3) a restart/retry instruction.
+- Avoid generic "set env vars" errors; always return concrete next steps for first-time installers.
 
 ## Plant Identification Rules (strict)
 
