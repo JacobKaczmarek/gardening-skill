@@ -1,0 +1,120 @@
+{
+  "name": "gardener",
+  "version": "1.0.0",
+  "description": "Plant care assistant with watering reminders and health checkups",
+  "author": "Hermes Agent",
+  "tags": ["gardener", "plants", "care", "reminders"],
+  "hermes_version": ">=2.0.0",
+  "platforms": ["linux", "macos"],
+  "metadata": {
+    "hermes": {
+      "category": "productivity",
+      "required_toolsets": ["web", "vision", "terminal", "file"]
+    }
+  },
+  "toolsets": ["gardener"],
+  "cron": [
+    {
+      "name": "gardener_daily_reminders",
+      "description": "Send daily plant care reminders at 18:00 Warsaw time",
+      "schedule": "0 18 * * *",
+      "timezone": "Europe/Warsaw",
+      "enabled": true,
+      "delivery": "origin"
+    },
+    {
+      "name": "gardener_monthly_checkups",
+      "description": "Monthly plant health checkup requests on the 1st of each month",
+      "schedule": "0 18 1 * *",
+      "timezone": "Europe/Warsaw",
+      "enabled": true,
+      "delivery": "origin"
+    }
+  ],
+  "env_vars": [
+    {
+      "name": "GARDENER_DB_URL",
+      "description": "PostgreSQL connection string for the gardener database",
+      "required": true,
+      "example": "postgresql://user:pass@host:5432/db"
+    },
+    {
+      "name": "GARDENER_S3_ENDPOINT",
+      "description": "S3-compatible endpoint URL (MinIO, AWS S3, Cloudflare R2, Backblaze B2, Wasabi, ...). Leave blank for AWS S3 default. Legacy alias: GARDENER_MINIO_ENDPOINT.",
+      "required": false,
+      "example": "https://your-s3-endpoint.example.com"
+    },
+    {
+      "name": "GARDENER_S3_ACCESS_KEY",
+      "description": "S3 access key. Legacy alias: GARDENER_MINIO_ACCESS_KEY.",
+      "required": false,
+      "example": "your-access-key"
+    },
+    {
+      "name": "GARDENER_S3_SECRET_KEY",
+      "description": "S3 secret key. Legacy alias: GARDENER_MINIO_SECRET_KEY.",
+      "required": false,
+      "example": "your-secret-key"
+    },
+    {
+      "name": "GARDENER_S3_BUCKET",
+      "description": "S3 bucket name for plant photos. Legacy alias: GARDENER_MINIO_BUCKET.",
+      "required": false,
+      "default": "plant-photos",
+      "example": "plant-photos"
+    },
+    {
+      "name": "GARDENER_S3_REGION",
+      "description": "S3 region. Use 'us-east-1' for MinIO and Cloudflare R2; set appropriately for AWS S3.",
+      "required": false,
+      "default": "us-east-1",
+      "example": "eu-central-1"
+    },
+    {
+      "name": "GARDENER_TELEGRAM_BOT_TOKEN",
+      "description": "Telegram bot token for sending notifications",
+      "required": true,
+      "example": "123456789:ABCdefGHI..."
+    },
+    {
+      "name": "PLANTNET_API_KEY",
+      "description": "Pl@ntNet API key — primary plant identification service (free tier: 500 req/day). Sign up at https://my.plantnet.org",
+      "required": true,
+      "example": "2b10AbCdEfGhIjKlMnOpQrStUv"
+    }
+  ],
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "gardener": {
+        "type": "object",
+        "properties": {
+          "default_timezone": {
+            "type": "string",
+            "default": "Europe/Warsaw"
+          },
+          "reminder_hour": {
+            "type": "integer",
+            "default": 18
+          },
+          "checkup_day": {
+            "type": "integer",
+            "default": 1
+          },
+          "escalation_hours": {
+            "type": "integer",
+            "default": 48
+          }
+        }
+      }
+    }
+  },
+  "capabilities": {
+    "identifies_plants": true,
+    "sends_reminders": true,
+    "tracks_care_history": true,
+    "health_checkups": true,
+    "vacation_mode": true,
+    "shared_plants": true
+  }
+}
