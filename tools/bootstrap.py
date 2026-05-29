@@ -8,6 +8,7 @@ Usage from any recipe (SKILL.md, scripts, ad-hoc):
 
 `setup()` is idempotent. It:
   • loads profile .env into os.environ (stripping surrounding quotes)
+  • validates required runtime env vars
   • adds this tools dir to sys.path
 """
 import os
@@ -17,9 +18,15 @@ from pathlib import Path
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
 
+REQUIRED_ENV_VARS = [
+    "GARDENER_DB_URL",
+    "PLANTNET_API_KEY",
+]
+
 
 def _candidate_env_paths() -> list[Path]:
     paths = []
+
     # Preferred explicit override
     env_override = os.environ.get("GARDENER_ENV_PATH")
     if env_override:
@@ -32,9 +39,8 @@ def _candidate_env_paths() -> list[Path]:
         profile_root = Path(skill_dir_str.split("/skills/", 1)[0])
         paths.append(profile_root / ".env")
 
-    # Generic fallbacks
+    # Generic fallback
     paths.append(Path.home() / ".hermes" / ".env")
-    paths.append(SKILL_DIR / "assets" / "example.env")
 
     # Deduplicate while preserving order
     deduped = []
@@ -47,7 +53,34 @@ def _candidate_env_paths() -> list[Path]:
     return deduped
 
 
-def setup() -> None:
+def _is_placeholder(value: str) -> bool:
+    if not value:
+        return True
+    v = value.strip().lower()
+    return (
+        "replace_with" in v
+        or "your-" in v
+        or "example" in v
+        or v.endswith("-here")
+    )
+
+
+def _validate_required_env() -> None:
+    missing = []
+    for key in REQUIRED_ENV_VARS:
+        value = os.environ.get(key, "")
+        if _is_placeholder(value):
+            missing.append(key)
+
+    if missing:
+        missing_list = ", ".join(missing)
+        raise RuntimeError(
+            "Gardening skill is not configured. Missing required env vars: "
+            f"{missing_list}. Set them in your profile .env file."
+        )
+
+
+def setup(validate_required: bool = True) -> None:
     for env_path in _candidate_env_paths():
         if env_path.exists():
             with env_path.open() as f:
@@ -60,6 +93,9 @@ def setup() -> None:
                     v = v.strip().strip('"').strip("'")
                     os.environ.setdefault(k, v)
             break
+
+    if validate_required:
+        _validate_required_env()
 
     tools_dir_str = str(TOOLS_DIR)
     if tools_dir_str not in sys.path:

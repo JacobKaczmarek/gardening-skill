@@ -46,7 +46,8 @@ from bootstrap import setup; setup()
 Rules:
 - Run Gardener Python through `terminal`, not `execute_code`.
 - Use any Python 3 interpreter with required dependencies installed.
-- `setup()` handles env loading and path setup.
+- `setup()` handles env loading, validates required env vars, and path setup.
+- If required vars are missing, `setup()` fails fast with a clear configuration error.
 
 ## Plant Identification Rules (strict)
 

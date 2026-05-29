@@ -53,6 +53,8 @@ hermes skills install https://raw.githubusercontent.com/JacobKaczmarek/gardening
 
 Copy `assets/example.env` values into your profile `.env` and fill placeholders.
 
+Important: installing a skill does not auto-configure env vars. You must set required vars manually.
+
 Required:
 - `GARDENER_DB_URL`
 - `PLANTNET_API_KEY`
