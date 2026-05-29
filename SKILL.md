@@ -264,6 +264,11 @@ Always apply species-specific overrides from `references/plants/<species>.md`.
 - Fix: switch to action-first troubleshooting: immediate dual test send + short confirmation request instead of long explanations.
 - Messaging style: one-line status updates, minimal theory, focus on "działa / nie działa".
 
+19. Fresh install loads only `SKILL.md` and none of the `gardener_*` tools are callable
+- Cause: installing from a raw `.../SKILL.md` URL may fetch only the document in some environments, without `tools/`, `scripts/`, or `assets/`.
+- Fix: install as a full package via GitHub tap (`hermes skills tap add <owner/repo>` -> `hermes skills browse` -> install `gardening`) or copy the whole folder into `~/.hermes/profiles/<profile>/skills/gardening/`.
+- Verification: after install/reset, ask for plant list and confirm the agent actually executes `gardener_get_plants` rather than replying that only SKILL.md is present.
+
 ## Lightweight Validation (preferred for straightforward refactors)
 
 For simple schema/logic updates, run quick checks:
