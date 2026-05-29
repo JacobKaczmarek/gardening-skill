@@ -55,6 +55,19 @@ Copy `assets/example.env` values into your profile `.env` and fill placeholders.
 
 Important: installing a skill does not auto-configure env vars. You must set required vars manually.
 
+Quick setup:
+
+```bash
+# Find your profile env file
+hermes config env-path
+
+# Open it and add required vars
+# GARDENER_DB_URL=postgresql://...
+# PLANTNET_API_KEY=...
+```
+
+If vars are missing, `setup()` now returns a fail-fast error with these instructions.
+
 Required:
 - `GARDENER_DB_URL`
 - `PLANTNET_API_KEY`

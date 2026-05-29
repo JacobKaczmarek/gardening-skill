@@ -74,9 +74,16 @@ def _validate_required_env() -> None:
 
     if missing:
         missing_list = ", ".join(missing)
+        env_path = _candidate_env_paths()[0]
         raise RuntimeError(
             "Gardening skill is not configured. Missing required env vars: "
-            f"{missing_list}. Set them in your profile .env file."
+            f"{missing_list}.\n\n"
+            "Setup:\n"
+            f"1) Open your profile env file: {env_path}\n"
+            "2) Add values for:\n"
+            "   - GARDENER_DB_URL=postgresql://...\n"
+            "   - PLANTNET_API_KEY=...\n"
+            "3) Restart Hermes session and try again."
         )
 
 

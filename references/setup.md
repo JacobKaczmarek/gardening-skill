@@ -29,6 +29,17 @@ skills/gardening/
 
 Use `assets/example.env` as template.
 
+Practical steps:
+
+```bash
+# See where this profile keeps env vars
+hermes config env-path
+
+# Edit that file and add required vars
+# GARDENER_DB_URL=postgresql://...
+# PLANTNET_API_KEY=...
+```
+
 Required variables:
 - `GARDENER_DB_URL`
 - `PLANTNET_API_KEY`
