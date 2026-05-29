@@ -87,7 +87,25 @@ def _validate_required_env() -> None:
         )
 
 
-def setup(validate_required: bool = True) -> None:
+def _auto_init_schema() -> None:
+    """Initialize DB schema if possible; raise actionable error on failure."""
+    try:
+        from db import init_schema
+    except Exception as e:
+        raise RuntimeError(
+            "Gardening skill could not import database tools for schema initialization. "
+            f"Details: {e}"
+        )
+
+    result = init_schema()
+    if not result.get("success"):
+        raise RuntimeError(
+            "Gardening skill could not initialize database schema automatically. "
+            f"Details: {result.get('error', 'unknown error')}"
+        )
+
+
+def setup(validate_required: bool = True, auto_init_schema: bool = True) -> None:
     for env_path in _candidate_env_paths():
         if env_path.exists():
             with env_path.open() as f:
@@ -107,3 +125,6 @@ def setup(validate_required: bool = True) -> None:
     tools_dir_str = str(TOOLS_DIR)
     if tools_dir_str not in sys.path:
         sys.path.insert(0, tools_dir_str)
+
+    if auto_init_schema:
+        _auto_init_schema()

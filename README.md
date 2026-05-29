@@ -73,6 +73,8 @@ hermes config env-path
 
 If vars are missing, `setup()` now returns a fail-fast error with these instructions.
 
+On successful setup, schema is auto-initialized (`CREATE TABLE IF NOT EXISTS ...`) so fresh databases bootstrap automatically.
+
 Required:
 - `GARDENER_DB_URL`
 - `PLANTNET_API_KEY`

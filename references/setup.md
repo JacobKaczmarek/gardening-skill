@@ -65,7 +65,9 @@ Notes:
 
 ## 4) Initialize database schema
 
-Run a small smoke check from the profile:
+Schema is auto-initialized by `from bootstrap import setup; setup()`.
+
+Optional manual smoke check from the profile:
 
 ```bash
 python3 -c "import sys; sys.path.insert(0, 'skills/gardening/tools'); from bootstrap import setup; setup(); from db import init_schema; print(init_schema())"

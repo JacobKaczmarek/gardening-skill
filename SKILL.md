@@ -46,7 +46,8 @@ from bootstrap import setup; setup()
 Rules:
 - Run Gardener Python through `terminal`, not `execute_code`.
 - Use any Python 3 interpreter with required dependencies installed.
-- `setup()` handles env loading, validates required env vars, and path setup.
+- `setup()` handles env loading, validates required env vars, path setup, and automatic DB schema initialization.
+- On a fresh database, `setup()` runs schema bootstrap (`init_schema`) automatically using idempotent `CREATE TABLE IF NOT EXISTS`.
 - If required vars are missing, `setup()` must fail fast with an actionable configuration error that includes:
   1) where to set vars (`hermes config env-path` or resolved profile `.env` path),
   2) exact required keys (`GARDENER_DB_URL`, `PLANTNET_API_KEY`),
@@ -268,6 +269,11 @@ Always apply species-specific overrides from `references/plants/<species>.md`.
 - Cause: installing from a raw `.../SKILL.md` URL may fetch only the document in some environments, without `tools/`, `scripts/`, or `assets/`.
 - Fix: install as a full package via GitHub tap (`hermes skills tap add <owner/repo>` -> `hermes skills browse` -> install `gardening`) or copy the whole folder into `~/.hermes/profiles/<profile>/skills/gardening/`.
 - Verification: after install/reset, ask for plant list and confirm the agent actually executes `gardener_get_plants` rather than replying that only SKILL.md is present.
+
+20. Declaring "done" while docs or policy changes are still unstaged
+- Cause: committing only a subset of touched docs (e.g., README changed but matching SKILL.md guidance remains unstaged).
+- Fix: before final handoff, run a strict docs consistency pass for install/setup guidance across `README.md`, `SKILL.md`, and `references/setup.md`, then commit remaining deltas.
+- Verification: clean working tree (`git status` shows no modified files) and user-facing install path is consistent in all three docs.
 
 ## Lightweight Validation (preferred for straightforward refactors)
 
