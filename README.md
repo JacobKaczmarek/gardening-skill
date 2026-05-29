@@ -43,11 +43,16 @@ Copy this folder into your profile skills directory:
 
 Then start a new Hermes session or reload skills.
 
-Option B — install directly from GitHub:
+Option B — GitHub tap install (recommended for full package):
 
 ```bash
-hermes skills install https://raw.githubusercontent.com/JacobKaczmarek/gardening-skill/main/SKILL.md
+hermes skills tap add JacobKaczmarek/gardening-skill
+hermes skills browse
+# then install `gardening` from the tap
 ```
+
+Important:
+- Avoid raw `SKILL.md` URL install for this skill. Some environments may fetch only `SKILL.md` without `tools/`, `scripts/`, and `assets/`, which breaks runtime functionality.
 
 ## Configuration
 
