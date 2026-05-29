@@ -51,16 +51,10 @@ hermes skills browse
 # then install `gardening` from the tap
 ```
 
-Important:
-- Avoid raw `SKILL.md` URL install for this skill. Some environments may fetch only `SKILL.md` without `tools/`, `scripts/`, and `assets/`, which breaks runtime functionality.
 
 ## Configuration
 
 Copy `assets/example.env` values into your profile `.env` and fill placeholders.
-
-Important: installing a skill does not auto-configure env vars. You must set required vars manually.
-
-Quick setup:
 
 ```bash
 # Find your profile env file
@@ -104,15 +98,3 @@ Unavailable without S3 credentials:
 - `tools/bootstrap.py` supports env path overrides via `GARDENER_ENV_PATH`.
 - `scripts/daily_reminders.py` supports skill-root override via `GARDENING_SKILL_ROOT`.
 
-## Publish to GitHub
-
-From this directory:
-
-```bash
-git init
-git add .
-git commit -m "feat: initial public gardening skill"
-git branch -M main
-git remote add origin https://github.com/<you>/gardening-skill.git
-git push -u origin main
-```
