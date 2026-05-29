@@ -218,6 +218,7 @@ Always apply species-specific overrides from `references/plants/<species>.md`.
 - Keep architecture/design docs communicator-agnostic and environment-neutral.
 - Keep migration history in dedicated migration docs only; do not leak local operational state into core references.
 - Before release, run a regex pass over `references/*.md` for private markers and replace with generic placeholders/examples.
+- Add a publish preflight: ensure `.gitignore` excludes `__pycache__/` and `*.pyc`, remove any cached bytecode from git index, and verify remote/auth state before push.
 
 11. Skill shared with another user/profile is not plug-and-play
 - Cause: hardcoded absolute paths (e.g. `/Users/...`) in SKILL instructions, bootstrap helpers, or scripts.

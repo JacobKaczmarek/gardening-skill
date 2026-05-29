@@ -71,12 +71,6 @@
       "example": "eu-central-1"
     },
     {
-      "name": "GARDENER_TELEGRAM_BOT_TOKEN",
-      "description": "Telegram bot token for sending notifications",
-      "required": true,
-      "example": "123456789:ABCdefGHI..."
-    },
-    {
       "name": "PLANTNET_API_KEY",
       "description": "Pl@ntNet API key — primary plant identification service (free tier: 500 req/day). Sign up at https://my.plantnet.org",
       "required": true,

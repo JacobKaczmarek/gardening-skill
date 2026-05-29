@@ -26,6 +26,8 @@ Current release: v1.0.0 (first public version)
 - PostgreSQL database
 - Pl@ntNet API key
 
+Note: messaging credentials (e.g. Telegram bot token) belong to Hermes gateway setup, not this skill package.
+
 Python dependencies used by the tools:
 - `psycopg2`
 - `requests`
