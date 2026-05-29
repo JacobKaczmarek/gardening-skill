@@ -8,6 +8,8 @@ A portable Hermes skill for plant care workflows:
 
 This package is publication-ready and intended to be shareable across machines/profiles.
 
+Current release: v1.0.0 (first public version)
+
 ## Contents
 
 - `SKILL.md` — runtime behavior and operating rules
@@ -31,11 +33,19 @@ Python dependencies used by the tools:
 
 ## Install
 
+Option A — local folder install:
+
 Copy this folder into your profile skills directory:
 
 `~/.hermes/profiles/<profile>/skills/gardening/`
 
 Then start a new Hermes session or reload skills.
+
+Option B — install directly from GitHub:
+
+```bash
+hermes skills install https://raw.githubusercontent.com/JacobKaczmarek/gardening-skill/main/SKILL.md
+```
 
 ## Configuration
 
